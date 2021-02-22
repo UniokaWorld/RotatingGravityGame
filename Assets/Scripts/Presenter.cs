@@ -5,7 +5,7 @@ using UniRx;
 
 public class Presenter : MonoBehaviour
 {
-    [SerializeField] private RotateModal _Modal;
+    [SerializeField] private Modal _Modal;
 
     [SerializeField] private RectTransform _Arrow;
 

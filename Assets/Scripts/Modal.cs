@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
-public class RotateModal : MonoBehaviour
+public class Modal : MonoBehaviour
 {
     [SerializeField] private FloatReactiveProperty _rotate = new FloatReactiveProperty();
 
