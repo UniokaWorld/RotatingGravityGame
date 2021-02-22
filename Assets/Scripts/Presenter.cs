@@ -11,6 +11,6 @@ public class Presenter : MonoBehaviour
 
     void Start()
     {
-        _Modal.Rotate.Subscribe(x => { _Arrow.Rotate(new Vector3(0, 0, x)); }).AddTo(this);
+        _Modal.Rotate.Subscribe(x => { _Arrow.eulerAngles = new Vector3(0, 0, x); }).AddTo(this);
     }
 }
