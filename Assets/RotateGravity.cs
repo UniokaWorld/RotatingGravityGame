@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotateGravity : MonoBehaviour
 {
     [Tooltip("GravitationalAcceleration")] [SerializeField]
-    private float g = 1.8f;
+    private float g = 9.8f;
 
     void Update()
     {
