@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class RotateGravity : MonoBehaviour
 {
+    [Tooltip("GravitationalAcceleration")] [SerializeField]
+    private float g = 1.8f;
+
     void Update()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -16,8 +19,8 @@ public class RotateGravity : MonoBehaviour
         Debug.Log(degree);
         float phase = degree * (Mathf.PI / 180);
 
-        float xPos = 1.8f * Mathf.Cos(phase);
-        float yPos = 1.8f * Mathf.Sin(phase);
+        float xPos = g * Mathf.Cos(phase);
+        float yPos = g * Mathf.Sin(phase);
 
         Vector3 pos = new Vector3(-yPos, xPos, 0);
         Physics.gravity = pos;
