@@ -9,7 +9,7 @@ public class Modal : MonoBehaviour
     [SerializeField] private FloatReactiveProperty _rotate = new FloatReactiveProperty();
     [SerializeField] private StringReactiveProperty _coin = new StringReactiveProperty();
     [SerializeField] private int _NeedCoin;
-    [SerializeField] private IntReactiveProperty _nowCoin = new IntReactiveProperty();
+    [SerializeField] private int _nowCoin;
 
     public IReadOnlyReactiveProperty<float> Rotate => _rotate;
     public IReadOnlyReactiveProperty<string> Coin => _coin;
@@ -40,6 +40,7 @@ public class Modal : MonoBehaviour
 
     void GetCoin()
     {
+        _nowCoin++;
         _coin.Value = "coin: " + _nowCoin + "/" + _NeedCoin;
     }
 }
