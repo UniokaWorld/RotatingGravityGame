@@ -40,6 +40,6 @@ public class Modal : MonoBehaviour
 
     void GetCoin()
     {
-        _coin.Value = "coin" + _nowCoin + _NeedCoin;
+        _coin.Value = "coin: " + _nowCoin + "/" + _NeedCoin;
     }
 }
