@@ -17,6 +17,11 @@ public class Modal : MonoBehaviour
     [Tooltip("GravitationalAcceleration")] [SerializeField]
     private float g = 9.8f;
 
+    void Start()
+    {
+        if (_NeedCoin != 0) SetCoin();
+    }
+
     void Update()
     {
         if (true)
@@ -41,6 +46,12 @@ public class Modal : MonoBehaviour
     void GetCoin()
     {
         _nowCoin++;
+        SetCoin();
+    }
+
+    void SetCoin()
+    {
         _coin.Value = "coin: " + _nowCoin + "/" + _NeedCoin;
+        if (_nowCoin == _NeedCoin) Debug.Log(true);
     }
 }
