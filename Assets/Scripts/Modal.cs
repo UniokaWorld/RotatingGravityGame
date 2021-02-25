@@ -9,11 +9,12 @@ public class Modal : MonoBehaviour
     [SerializeField] private FloatReactiveProperty _rotate = new FloatReactiveProperty();
     [SerializeField] private StringReactiveProperty _coin = new StringReactiveProperty();
     [SerializeField] private int _NeedCoin;
-    [SerializeField] private int _nowCoin;
+    [SerializeField] IntReactiveProperty _nowCoin = new IntReactiveProperty();
     [SerializeField] BoolReactiveProperty _p_start = new BoolReactiveProperty(false);
 
     public IReadOnlyReactiveProperty<float> Rotate => _rotate;
     public IReadOnlyReactiveProperty<string> Coin => _coin;
+    public ReactiveProperty<int> NowCoin => _nowCoin;
     public IReadOnlyReactiveProperty<bool> P_Start => _p_start;
 
     [Tooltip("GravitationalAcceleration")] [SerializeField]
@@ -22,7 +23,7 @@ public class Modal : MonoBehaviour
     void Start()
     {
         Physics.gravity = new Vector3(0, 0, 0);
-        if (_NeedCoin != 0) SetCoin();
+        if (_NeedCoin != 0) NowCoin.Subscribe(x => _coin.Value = "Coin" + _nowCoin + "/" + _NeedCoin).AddTo(this);
     }
 
     void Update()
@@ -48,17 +49,5 @@ public class Modal : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0)) _p_start.Value = true;
         }
-    }
-
-    void GetCoin()
-    {
-        _nowCoin++;
-        SetCoin();
-    }
-
-    void SetCoin()
-    {
-        _coin.Value = "coin: " + _nowCoin + "/" + _NeedCoin;
-        if (_nowCoin == _NeedCoin) Debug.Log(true);
     }
 }
