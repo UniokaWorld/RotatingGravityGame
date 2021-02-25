@@ -10,21 +10,24 @@ public class Modal : MonoBehaviour
     [SerializeField] private StringReactiveProperty _coin = new StringReactiveProperty();
     [SerializeField] private int _NeedCoin;
     [SerializeField] private int _nowCoin;
+    [SerializeField] BoolReactiveProperty _pstart = new BoolReactiveProperty(false);
 
     public IReadOnlyReactiveProperty<float> Rotate => _rotate;
     public IReadOnlyReactiveProperty<string> Coin => _coin;
+    public IReadOnlyReactiveProperty<bool> PStart => _pstart;
 
     [Tooltip("GravitationalAcceleration")] [SerializeField]
     private float g = 9.8f;
 
     void Start()
     {
+        Physics.gravity = new Vector3(0, 0, 0);
         if (_NeedCoin != 0) SetCoin();
     }
 
     void Update()
     {
-        if (true)
+        if (_pstart.Value)
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector2 camera_center = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.y);
@@ -40,6 +43,10 @@ public class Modal : MonoBehaviour
 
             Vector3 pos = new Vector3(-yPos, xPos, 0);
             Physics.gravity = pos;
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0)) _pstart.Value = true;
         }
     }
 
