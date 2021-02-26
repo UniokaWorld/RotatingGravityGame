@@ -11,11 +11,15 @@ public class Modal : MonoBehaviour
     [SerializeField] private int _NeedCoin;
     [SerializeField] IntReactiveProperty _nowCoin = new IntReactiveProperty();
     [SerializeField] BoolReactiveProperty _p_start = new BoolReactiveProperty(false);
+    [SerializeField] BoolReactiveProperty _can_goal = new BoolReactiveProperty(false);
+    [SerializeField] BoolReactiveProperty _goal = new BoolReactiveProperty(false);
 
     public IReadOnlyReactiveProperty<float> Rotate => _rotate;
     public IReadOnlyReactiveProperty<string> Coin => _coin;
     public ReactiveProperty<int> NowCoin => _nowCoin;
     public IReadOnlyReactiveProperty<bool> P_Start => _p_start;
+    public ReactiveProperty<bool> Can_Goal => _can_goal;
+    public ReactiveProperty<bool> Goal => _goal;
 
     [Tooltip("GravitationalAcceleration")] [SerializeField]
     private float g = 9.8f;
@@ -23,7 +27,14 @@ public class Modal : MonoBehaviour
     void Start()
     {
         Physics.gravity = new Vector3(0, 0, 0);
-        if (_NeedCoin != 0) NowCoin.Subscribe(x => _coin.Value = "Coin" + _nowCoin + "/" + _NeedCoin).AddTo(this);
+        if (_NeedCoin == 0) _can_goal.Value = true;
+        if (!_can_goal.Value)
+            NowCoin.Subscribe(x =>
+            {
+                _coin.Value = "Coin" + _nowCoin + "/" + _NeedCoin;
+                if (_nowCoin.Value == _NeedCoin) _can_goal.Value = true;
+            }).AddTo(this);
+        Goal.Subscribe(x => Debug.Log(x));
     }
 
     void Update()
