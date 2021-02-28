@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Doozy.Engine;
 using UnityEngine;
 using UniRx;
 
@@ -34,7 +35,11 @@ public class Modal : MonoBehaviour
                 _coin.Value = "Coin" + _nowCoin + "/" + _NeedCoin;
                 if (_nowCoin.Value == _NeedCoin) _can_goal.Value = true;
             }).AddTo(this);
-        Goal.Subscribe(x => Debug.Log(x));
+        Goal.Where(x => x).Subscribe(_ =>
+        {
+            GameEventMessage.SendEvent("GameClear");
+            Physics.gravity = new Vector3(0, 0, 0);
+        });
     }
 
     void Update()
@@ -56,6 +61,7 @@ public class Modal : MonoBehaviour
             Vector3 pos = new Vector3(-yPos, xPos, 0);
             Physics.gravity = pos;
         }
+
         else
         {
             if (Input.GetMouseButtonDown(0)) _p_start.Value = true;

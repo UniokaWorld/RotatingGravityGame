@@ -10,11 +10,13 @@ public class Presenter : MonoBehaviour
     [SerializeField] private RectTransform _Arrow;
     [SerializeField] private TextMeshProUGUI coinUI;
     [SerializeField] private GameObject Messege;
+    [SerializeField] private GameObject Gate;
 
     void Start()
     {
         _Modal.Rotate.Subscribe(x => { _Arrow.eulerAngles = new Vector3(0, 0, x); }).AddTo(this);
         _Modal.Coin.Subscribe(x => coinUI.text = x).AddTo(this);
         _Modal.P_Start.Subscribe(x => Messege.SetActive(!x));
+        _Modal.Can_Goal.Subscribe(x => Gate.SetActive(x));
     }
 }

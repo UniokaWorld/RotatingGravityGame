@@ -15,11 +15,19 @@ public class Reload : MonoBehaviour
 
         //長押しの判定
         mouseDownStream
-            //マウスクリックされたら3秒後にOnNextを流す
-            .SelectMany(_ => Observable.Timer(TimeSpan.FromSeconds(1)))
-            //途中でMouseUpされたらストリームをリセット
+            .SelectMany(_ => Observable.Timer(TimeSpan.FromSeconds(0.5f)))
             .TakeUntil(mouseUpStream)
             .RepeatUntilDestroy(this.gameObject)
-            .Subscribe(_ => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
+            .Subscribe(_ => { ReloadScene(); });
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void SetScene(String stage)
+    {
+        FadeManager.Instance.LoadScene(stage, 1.0f);
     }
 }

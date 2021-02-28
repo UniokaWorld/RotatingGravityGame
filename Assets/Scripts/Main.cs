@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Doozy.Engine;
 using UnityEngine;
 
 public class Main : MonoBehaviour
@@ -23,5 +25,14 @@ public class Main : MonoBehaviour
 
         Vector3 pos = new Vector3(-yPos, xPos, 0);
         Physics.gravity = pos;
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameEventMessage.SendEvent("Click");
+        }
+    }
+
+    public void StageButton(String stage)
+    {
+        FadeManager.Instance.LoadScene(stage, 1.0f);
     }
 }
